@@ -1,6 +1,7 @@
-#include "Arduino.h"
+#include <Arduino.h>
 #include <MsTimer2.h>
 #include "../lib/FlexCAN_T4/CanBus/CanBus.h"
+#include "../lib/GyemsRmd/GyemsRmd.h"
 
 #if defined(__IMXRT1062__)
 CanBus<CAN3, 10> &canbus = CanBus<CAN3>::getInstance();
@@ -8,6 +9,8 @@ CanBus<CAN3, 10> &canbus = CanBus<CAN3>::getInstance();
 #if defined(__MK20DX256__)
 CanBus<CAN0> &canbus = CanBus<CAN0>::getInstance();
 #endif
+
+GyemsRmd motorX(0);
 
 const int ledPin = 13;
 
@@ -42,6 +45,7 @@ void setup() {
 }
 
 void loop() {
+  motorX.read(canbus);
   // Serial.println(buf[0]);
   delay(100);
 }
